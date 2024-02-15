@@ -14,22 +14,22 @@ export const EVM_NETWORKS = {
   },
   97: {
     rpc_url: "https://bsc-testnet.publicnode.com",
-    coordinator_address: "0xfb0522d3c1F3236560f79040f01A35af327098c9",
+    coordinator_address: "0x78208AfF3976165feF81EE46DEE50eb72cf24834",
     graph_url: "https://api.thegraph.com/subgraphs/name/shayanshiravani/derand-bsc-testnet"
   },
   11155111: {
     rpc_url: "https://rpc.ankr.com/eth_sepolia",
-    coordinator_address: "0x518D6d9e790457C9E822894D4AeBB757a170b443",
+    coordinator_address: "0xa7b7A5ACB18825a2599156FEa1FA98f4ebD292C2",
     graph_url: "https://api.thegraph.com/subgraphs/name/shayanshiravani/derand-sepolia"
   },
   5: {
     rpc_url: "https://rpc.ankr.com/eth_goerli",
-    coordinator_address: "0x52136E7D4714214f3fEF223648f984b08700da23",
+    coordinator_address: "0xe8E36D3FbB933f4aa45ED0B1c3D8Ae942535a529",
     graph_url: "https://api.thegraph.com/subgraphs/name/shayanshiravani/derand-goerli"
   },
   43113: {
     rpc_url: "https://rpc.ankr.com/avalanche_fuji",
-    coordinator_address: "0x3D1CBd70145b4025579DBFbBe643517C299bD423",
+    coordinator_address: "0xB01496ed0171dc66aB743B4604671D57c00C6182",
     graph_url: "https://api.thegraph.com/subgraphs/name/shayanshiravani/derand-avalanche-fuji"
   }
 }
