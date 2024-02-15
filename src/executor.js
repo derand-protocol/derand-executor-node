@@ -1,11 +1,12 @@
 import Web3 from 'web3';
 import axios from "axios";
-import ABI from '../abis/DeRandCoordinator.json'  assert { type: "json" };
-import { EMPTY_BYTES, EVM_NETWORKS, MUON_APP_URL } from './constants.js';
+import COORDINATOR_ABI from '../abis/DeRandCoordinator.json'  assert { type: "json" };
+import { EMPTY_BYTES, EVM_NETWORKS } from './constants.js';
 import { ChainParam } from './db/models/ChainParam.js';
 import { isExecutionLock, lockExecution, sleep, unlockExecution } from './utils.js';
 import "dotenv/config";
 import { consumerHasBalance, saveTransaction } from './fees.js';
+import { MuonApp } from './muon-helper.js';
 
 
 const getRequests = async (graph_url, fromBlock) => {
@@ -30,6 +31,7 @@ const getRequests = async (graph_url, fromBlock) => {
             blockNumber
             minimumRequestConfirmations
             numWords
+            transactionHash
           }
         }
       `;
@@ -65,22 +67,6 @@ const getRequests = async (graph_url, fromBlock) => {
   return response;
 }
 
-const getMuonSig = async (
-  chainId,
-  requestId,
-  blockNum,
-  callbackGasLimit,
-  numWords,
-  consumer
-) => {
-  const response = await axios.get(
-    `${MUON_APP_URL}&params[chainId]=${chainId}&params[requestId]\
-=${requestId}&params[blockNum]=${blockNum}&params[callbackGasLimit]=${callbackGasLimit}\
-&params[numWords]=${numWords}&params[consumer]=${consumer}`
-  );
-  return response.data;
-}
-
 class Coordinator {
 
   constructor(rpc_url, address) {
@@ -89,7 +75,7 @@ class Coordinator {
       `0x${process.env.WALLET_PRIVATE_KEY}`
     );
     this.address = address;
-    this.contract = new this.web3.eth.Contract(ABI.abi, address);
+    this.contract = new this.web3.eth.Contract(COORDINATOR_ABI, address);
   }
   
   async commitmentExists (requestId) {
@@ -114,9 +100,10 @@ class Coordinator {
         numWords: numWords,
         sender: sender
       },
+      process.env.EXECUTOR_ADDRESS,
       reqId,
       sig,
-      process.env.EXECUTOR_ADDRESS
+      "0x00"
     );
 
     const options = {
@@ -142,6 +129,8 @@ export const run = async () => {
     return false;
   }
   await lockExecution();
+
+  const muonApp = new MuonApp();
 
   await Promise.all(Object.keys(EVM_NETWORKS).map(async(chainId) => {
     try {
@@ -173,7 +162,8 @@ export const run = async () => {
           callbackGasLimit,
           numWords,
           sender,
-          blockNumber
+          blockNumber,
+          transactionHash
         } = requests[i];
   
         fromBlock = blockNumber > fromBlock ? blockNumber : fromBlock;
@@ -188,27 +178,9 @@ export const run = async () => {
   
         console.log(`Consumer: ${sender}`);
         console.log(`Process the request ${requestId}`);
-  
-        const muonSig = await getMuonSig(
-          chainId,
-          requestId, 
-          blockNumber, 
-          callbackGasLimit, 
-          numWords, 
-          sender
-        );
-  
-        if(!muonSig) {
-          throw new Error("Invalid muon response");
-        }
-  
-        const reqId = muonSig["result"]["reqId"];
-        const signature = {
-          signature: muonSig["result"]["signatures"][0]["signature"],
-          owner: muonSig["result"]["signatures"][0]["owner"],
-          nonce: muonSig["result"]["data"]["init"]["nonceAddress"],
-        };
-  
+
+        const { reqId, signature } = await muonApp.getSignature(chainId, transactionHash);
+
         const txHash = await coordinator.fulfillRandomNumbers(
           requestId,
           blockNumber, 

@@ -1,13 +1,15 @@
 import 'dotenv/config';
 
-export const MUON_APP_URL = `http://${process.env.MUON_GATEWAY}/v1/?app=vrf&method=random-number`
+export const MUON_APP_URL = `http://${process.env.MUON_GATEWAY}/v1/?app=derand`
 export const EMPTY_BYTES = "0x0000000000000000000000000000000000000000000000000000000000000000";
 export const FEE_MANAGER_ADDRESS = "0x0a91e04C4947D0Ba9B62b84d735A345b6018D762";
+export const MUON_APP_ID = "93503201847067459816865778983521324688116667814772937141130154736249866362126";
+export const MUON_EXPLORER_API = "https://explorer.muon.net/alice/api/v1/requests";
 
 export const EVM_NETWORKS = {
   80001: {
     rpc_url: "https://rpc.ankr.com/polygon_mumbai",
-    coordinator_address: "0x6e3cf66cb5b6F56B2e57849833e02Ac98637eB83",
+    coordinator_address: "0x3abAAD56d723b0aBEC11d5e8a2F1918AaaFbf698",
     graph_url: "https://api.thegraph.com/subgraphs/name/shayanshiravani/derand-mumbai"
   },
   97: {
