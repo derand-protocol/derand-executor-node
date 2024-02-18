@@ -102,8 +102,7 @@ class Coordinator {
       },
       process.env.EXECUTOR_ADDRESS,
       reqId,
-      sig,
-      "0x00"
+      sig
     );
 
     const options = {
