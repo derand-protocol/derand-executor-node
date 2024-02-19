@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import axios from "axios";
 import "dotenv/config";
-import DeRandFeeManagerAbi from '../abis/DeRandFeeManager.json'  assert { type: "json" };
+import FEE_MANAGER_ABI from '../abis/DeRandFeeManager.json'  assert { type: "json" };
 import { EVM_NETWORKS, FEE_MANAGER_ADDRESS, MUON_APP_ID } from './constants.js';
 import { Transaction } from './db/models/Transaction.js';
 import { FeeUsage } from './db/models/FeeUsage.js';
@@ -12,7 +12,7 @@ export const consumerHasBalance = async (chainId, consumer) => {
   const rpc_url = "https://bsc-testnet.publicnode.com";
   const web3 = new Web3(rpc_url);
   const contract = new web3.eth.Contract(
-    DeRandFeeManagerAbi.abi, FEE_MANAGER_ADDRESS
+    FEE_MANAGER_ABI, FEE_MANAGER_ADDRESS
   );
   const executor = process.env.EXECUTOR_ADDRESS;
 
