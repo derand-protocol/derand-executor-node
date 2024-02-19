@@ -1,11 +1,23 @@
 import axios from "axios";
 import { MUON_APP_URL, MUON_EXPLORER_API } from "./constants.js";
+import { muonFeeSignature } from "./fees.js";
 
 class MuonApp {
   async getSignature(chainId, txHash) {
-    const response = await axios.get(
-      `${MUON_APP_URL}&method=random-number&params[chainId]=${chainId}&params[txHash]=${txHash}`
-    );
+    const fee = muonFeeSignature(chainId);
+
+    const requestData = {
+      app: "derand",
+      method: "random-number",
+      fee,
+      params: {
+        chainId,
+        txHash
+      },
+      mode: "sign"
+    };
+
+    const response = await axios.post(MUON_APP_URL, requestData);
     const muonSig = response.data;
 
     if(!muonSig) {

@@ -2,10 +2,11 @@ import Web3 from 'web3';
 import axios from "axios";
 import "dotenv/config";
 import DeRandFeeManagerAbi from '../abis/DeRandFeeManager.json'  assert { type: "json" };
-import { EVM_NETWORKS, FEE_MANAGER_ADDRESS } from './constants.js';
+import { EVM_NETWORKS, FEE_MANAGER_ADDRESS, MUON_APP_ID } from './constants.js';
 import { Transaction } from './db/models/Transaction.js';
 import { FeeUsage } from './db/models/FeeUsage.js';
 import { ZERO_BI, bn } from './utils.js';
+import ethSigUtil from "@metamask/eth-sig-util";
 
 export const consumerHasBalance = async (chainId, consumer) => {
   const rpc_url = "https://bsc-testnet.publicnode.com";
@@ -118,4 +119,45 @@ export const syncFeeUsages = async () => {
       console.log(error.message);
     }
   });
+}
+
+export const muonFeeSignature = (chainId) => {
+  const {
+    rpc_url
+  } = EVM_NETWORKS[chainId];
+
+  const web3 = new Web3(rpc_url);
+
+  let timestamp = Math.floor(Date.now());
+  let wallet = web3.eth.accounts.privateKeyToAccount(
+    `0x${process.env.FEE_DEPOSITER_PK}`
+  );
+
+  const address = wallet.address;
+  const privateKey = wallet.privateKey.substring(2);
+
+  let eip712TypedData = {
+    types: {
+      EIP712Domain: [{ name: "name", type: "string" }],
+      Message: [
+        { type: "address", name: "address" },
+        { type: "uint64", name: "timestamp" },
+        { type: "uint256", name: "appId" },
+      ],
+    },
+    domain: { name: "Muonize" },
+    primaryType: "Message",
+    message: { address: address, timestamp, appId: MUON_APP_ID },
+  };
+  const sign = ethSigUtil.signTypedData({
+    privateKey: privateKey,
+    data: eip712TypedData,
+    version: ethSigUtil.SignTypedDataVersion.V4,
+  });
+
+  return {
+    spender: wallet.address,
+    timestamp,
+    signature: sign    
+  }
 }
