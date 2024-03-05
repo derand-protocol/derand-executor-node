@@ -9,7 +9,7 @@ import { ZERO_BI, bn } from './utils.js';
 import ethSigUtil from "@metamask/eth-sig-util";
 
 export const consumerHasBalance = async (chainId, consumer) => {
-  const rpc_url = "https://bsc-testnet.publicnode.com";
+  const rpc_url = "https://rpc.ankr.com/bsc";
   const web3 = new Web3(rpc_url);
   const contract = new web3.eth.Contract(
     FEE_MANAGER_ABI, FEE_MANAGER_ADDRESS
