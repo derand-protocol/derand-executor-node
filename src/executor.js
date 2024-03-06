@@ -171,9 +171,9 @@ export const run = async () => {
           continue;
         }
 
-        if(!await consumerHasBalance(chainId, sender)) {
-          continue;
-        }
+        // if(!await consumerHasBalance(chainId, sender)) {
+        //   continue;
+        // }
   
         console.log(`Consumer: ${sender}`);
         console.log(`Process the request ${requestId}`);
