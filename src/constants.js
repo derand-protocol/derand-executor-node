@@ -20,6 +20,6 @@ export const EVM_NETWORKS = {
   10: {
     rpc_url: "https://rpc.ankr.com/optimism",
     coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
-    graph_url: "https://api.thegraph.com/subgraphs/name/shayanshiravani/derand-optimism"
+    graph_url: "https://api.studio.thegraph.com/query/71642/derand-optimism/version/latest"
   }
 }
