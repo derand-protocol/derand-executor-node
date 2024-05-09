@@ -21,5 +21,15 @@ export const EVM_NETWORKS = {
     rpc_url: "https://rpc.ankr.com/optimism",
     coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
     graph_url: "https://api.studio.thegraph.com/query/71642/derand-optimism/version/latest"
-  }
+  },
+  8453: {
+    rpc_url: "https://rpc.ankr.com/base",
+    coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
+    graph_url: "https://api.studio.thegraph.com/query/71642/derand-base/version/latest"
+  },
+  534352: {
+    rpc_url: "https://rpc.scroll.io",
+    coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
+    graph_url: "https://api.studio.thegraph.com/query/71642/derand-scroll/version/latest"
+  },
 }
