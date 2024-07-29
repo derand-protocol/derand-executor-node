@@ -32,4 +32,9 @@ export const EVM_NETWORKS = {
     coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
     graph_url: "https://api.studio.thegraph.com/query/71642/derand-scroll/version/latest"
   },
+  7001: {
+    rpc_url: "https://zetachain-athens-evm.blockpi.network/v1/rpc/public",
+    coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
+    graph_url: "https://api.goldsky.com/api/public/project_clz55sb03488q01zo8llm0txr/subgraphs/derand/zeta-testnet/gn"
+  },
 }
