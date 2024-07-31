@@ -37,4 +37,9 @@ export const EVM_NETWORKS = {
     coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
     graph_url: "https://subgraph.satsuma-prod.com/96389a812495/shayans-team--869747/derand-zeta-testnet/api",
   },
+  7000: {
+    rpc_url: "https://zetachain-evm.blockpi.network/v1/rpc/public",
+    coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
+    graph_url: "https://subgraph.satsuma-prod.com/96389a812495/shayans-team--869747/derand-zeta/api",
+  }
 }
