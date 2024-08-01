@@ -7,11 +7,11 @@ export const MUON_APP_ID = "9350320184706745981686577898352132468811666781477293
 export const MUON_EXPLORER_API = "https://explorer.muon.net/pion/api/v1/requests";
 
 export const EVM_NETWORKS = {
-  // 56: {
-  //   rpc_url: "https://rpc.ankr.com/bsc",
-  //   coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
-  //   graph_url: "https://api.studio.thegraph.com/query/71642/derand-bsc/version/latest"
-  // },
+  56: {
+    rpc_url: "https://rpc.ankr.com/bsc",
+    coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
+    graph_url: "https://api.studio.thegraph.com/query/71642/derand-bsc/version/latest"
+  },
   59144: {
     rpc_url: "https://rpc.linea.build",
     coordinator_address: "0x24092A71ae67b6773F6ecdc56a9E153e5C57D2E7",
